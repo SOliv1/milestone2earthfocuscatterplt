@@ -21,9 +21,9 @@
 </head>
 <body>
     <h1>EarthFocus Part-2 Scatter-Plot</h1>
-    <h2>DC Scatter Plot</h2>
+    <h2>Scatter Plot</h2>
     <div>
-        <h3>Transactions Per Date, colour coded by person</h3>
+        <h3>Area Per Continent, colour coded by Continent </h3>
         <div id="scatter-plot"></div>
     </div>
     <script>
@@ -33,13 +33,13 @@
 
     function makeGraphs(error, countrypopulationData) {
         var ndx = crossfilter(countrypopulationData);
-        var parseCountry = d3.population.format("").parse;
+        var parseContinent = d3.area.format("").parse;
 
         countrypopulationData.forEach(function(d){
-            d.date = parsePopulation(d.date);
+            d. = parseContinent(d.area);
         });
 
-        var countryDim = ndx.dimension(function(d){
+        var ConitinentDim = ndx.dimension(function(d){
             return d.country;
         });
 
@@ -47,10 +47,10 @@
             .domain(["Country", "Continent", "Population", "Area" ])
             .range(["red", "green", "blue", "yellow"]);
 
-        var minCountry = populationDim.bottom(1)[0].population;
-        var maxCountry = populationDim.top(1)[0].population;
+        var minContinent = areaDim.bottom(1)[0].area
+        var maxContinent = populationDim.top(1)[0].area;
         var populationDim = ndx.dimension(function(d){
-            return [d.country, d.population, d];
+            return [d.continent, d.area, d];
         });
 
         var continentGroup = ContinentDim.group();
@@ -73,7 +73,7 @@
             })
 
             .colors(tradeColors)
-            .dimension(areaDim)
+            .dimension(continentDim)
             .group(ContinentGroup);
 
         dc.renderAll();
