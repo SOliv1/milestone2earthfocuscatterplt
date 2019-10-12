@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Earth Focus Part2-ScatterPlot</title>
+    <link rel="stylesheet" href="static/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/dc/2.1.8/dc.min.css"/>
+    <style>
+
+        div {
+            clear: left;
+        }
+
+    </style>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.12/crossfilter.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dc/2.1.8/dc.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/queue-async/1.0.7/queue.min.js"></script>
+</head>
+<body>
+    <h1>EarthFocus Part-2 Scatter-Plot</h1>
+    <h2>DC Scatter Plot</h2>
+    <div>
+        <h3>Transactions Per Date, colour coded by person</h3>
+        <div id="scatter-plot"></div>
+    </div>
+    <script>
+    queue()
+        .defer(d3.json, "data/countrypopulation.json")
+        .await(makeGraphs);
+
+    function makeGraphs(error, countrypopulationData) {
+        var ndx = crossfilter(countrypopulationData);
+        var parseCountry = d3.population.format("").parse;
+
+        countrypopulationData.forEach(function(d){
+            d.date = parsePopulation(d.date);
+        });
+
+        var countryDim = ndx.dimension(function(d){
+            return d.country;
+        });
+
+        var tradeColors = d3.scale.ordinal()
+            .domain(["Country", "Continent", "Population", "Area" ])
+            .range(["red", "green", "blue", "yellow"]);
+
+        var minCountry = populationDim.bottom(1)[0].population;
+        var maxCountry = populationDim.top(1)[0].population;
+        var populationDim = ndx.dimension(function(d){
+            return [d.country, d.population, d];
+        });
+
+        var continentGroup = ContinentDim.group();
+        var Continent_chart = dc.scatterPlot("#scatter-plot");
+
+        Continent_chart
+            .width(768)
+            .height(480)
+            .x(d3.time.scale().domain([minArea, maxArea]))
+            .brushOn(false)
+            .symbolSize(8)
+            .clipPadding(10)
+            .yAxisLabel("Area")
+            .title(function (d) {
+                return d.key[2].Continent + " Area " + d.key[2].area + " Continent " + d.key[2].continent;
+            })
+
+            .colorAccessor(function (d) {
+                return d.key[2].Continent;
+            })
+
+            .colors(tradeColors)
+            .dimension(areaDim)
+            .group(ContinentGroup);
+
+        dc.renderAll();
+    }
+    </script>
+</body>
+</html>
+
