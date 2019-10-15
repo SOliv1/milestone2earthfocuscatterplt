@@ -1,0 +1,16 @@
+[
+
+{    "Country": "Russia",    "Continent": "Europe",    "Area": 17098246,    "Population": 144  },
+{    "Country": "Canada",    "Continent": "North America",    "Area": 9984670,    "Population": 36.6  },
+{    "Country": "China",    "Continent": "Asia",    "Area": 9572900,    "Population": 1400  },
+{    "Country": "United States of America",    "Continent": "North America",    "Area": 9525067,    "Population": 324  },
+{    "Country": "Brazil",    "Continent": "South America",    "Area": 8515767,    "Population": 209  },
+{    "Country": "Australia",    "Continent": "Australia",    "Area": 7692024,    "Population": 24.5  },
+{    "Country": "India",    "Continent": "Asia",    "Area": 3287263,    "Population": 1340},
+{    "Country": "Argentina",    "Continent": "South America",    "Area": 2780400,    "Population": 44.3  },
+{    "Country": "Kazakhstan",    "Continent": "Asia",    "Area": 2724900,    "Population": 18.2  },
+{    "Country": "Algeria",    "Continent": "Africa",    "Area": 2381740,    "Population": 41.3  },
+{    "Country": "Democratic Republic of the Congo",    "Continent": "Africa",    "Area": 2345410,    "Population": 81.3  },
+{    "Country": "Kingdom of Denmark",    "Continent": "Europe",    "Area": 2210583,    "Population": 5.73  }
+
+]
