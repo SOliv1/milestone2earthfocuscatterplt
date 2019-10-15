@@ -23,41 +23,40 @@
     <h1>EarthFocus Part-2</h1>
     <h2>Scatter Plot</h2>
     <div>
-        <h3>Area Per Continent, colour coded by Continent </h3>
         <div id="scatter-plot"></div>
     </div>
     <script>
     queue()
-        .defer(d3.json, "data/countrypopulation.json")
+        .defer(d3.json, "data/API_sp.pop.totl_ds2.json")
         .await(makeGraphs);
 
-    function makeGraphs(error, countrypopulationData) {
-        var ndx = crossfilter(countrypopulationData);
-        var parseContinent = d3.area.format("").parse;
+    function makeGraphs(error, API_sp.pop.totl_ds2.jsonData) {
+        var ndx = crossfilter(API_sp.pop.totl_ds2.jsonData);
+        var parse = indicator_code.format("y").parse;
 
-        countrypopulationData.forEach(function(d){
-            d. = parseContinent(d.continent);
+        API_sp.pop.totl_ds2.jsonData.forEach(function(d){
+            d. = SP.POP.TOTL(d.SP.POP.TOTL);
         });
 
-        var continentDim = ndx.dimension(function(d){
-            return d.continent;
+        var SP.POP.TOTL.Dim = ndx.dimension(function(d){
+            return d.SP.POP.TOTL;
         });
 
         var tradeColors = d3.scale.ordinal()
-            .domain(["Country", "Continent", "Population", "Area" ])
-            .range(["red", "green", "blue", "yellow"]);
+            .domain(["Country", "Population" ])
+            .range(["red", "green", "blue"]);
 
-        var minContinent = areaDim.bottom(1)[0].area
-        var maxContinent = areaDim.top(1)[0].area;
+        var minIndicator_Code = totalDim.bottom(1)[0].area
+        var maxIndicator_Code = totalDim.top(1)[0].area;
 
-        var continentDim = ndx.dimension(function(d){
-            return [d.area, d.continent, d];
+        var Indicator_CodeDim = ndx.dimension(function(d){
+            return [d.Indicator_Code, d.total];
         });
 
-        var continentGroup = continentDim.group();
-        var continent_chart = dc.scatterPlot("#scatter-plot");
+        var Indicator_CodeGroup = Indicator_CodeDim.group();
+        var Indicator_Code_chart = dc.scatterPlot("#scatter-plot");
 
-        continent_chart
+        Indicator_Code_chart
             .width(768)
             .height(480)
             .x(d3.time.scale().domain([minArea, maxArea]))
