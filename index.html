@@ -28,10 +28,10 @@
         <h3>Population verses Area per Country</h3>
         <div id="scatter-plot"></div>
     </div>
-
-    <script>
+    <script
+    >
     queue()
-        .defer(d3.json, "data/countrypopulation.json")
+        .defer(d3.json, "data/API_sp.pop.totl_ds2.json")
         .await(makeGraphs);
     function makeGraphs(error, populationData) {
         var ndx = crossfilter(populationData);
@@ -55,20 +55,8 @@
         var area_group = area_dim.group();
         var area_chart = dc.scatterPlot("#scatter-plot");
 
-        area_chart
-            .width(768)
-            .height(480)
-            .x(d3.area.scale().domain([min_area, max_area]))
-            .brushOn(false)
-            .symbolSize(8)
-            .clipPadding(10)
-            .yAxisLabel("Area")
-            .dimension(country_dim)
-            .group(area_group);
-
-        dc.renderAll();
+      dc.renderAll();
     }
     </script>
 </body>
 </html>
-
