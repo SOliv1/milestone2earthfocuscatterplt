@@ -31,7 +31,7 @@
     <script
     >
     queue()
-        .defer(d3.json, "data/API_sp.pop.totl_ds2.json")
+        .defer(d3.json, "countrypopulation.json")
         .await(makeGraphs);
     function makeGraphs(error, populationData) {
         var ndx = crossfilter(populationData);
