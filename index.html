@@ -31,20 +31,13 @@
     <script
     >
     queue()
-        .defer(d3.json, "countrypopulation.json")
+        .defer(d3.json, "data/countrypopulation.json")
         .await(makeGraphs);
     function makeGraphs(error, countrypopulationData) {
-        var ndx = crossfilter(countrypopulationData);
 
-        var parseArea = d3.area.format("").parse;
-        areaData.forEach(function(d){
-            d.area = parseDate(d.area);
+    var population_dim = ndx.dimension(function(d){
+            return d.population;
         });
-
-        var country_dim = ndx.dimension(function(d){
-            return d.country;
-        });
-
         var min_population = population_dim.bottom(1)[0].population;
         var max_population = population_dim.top(1)[0].population;
 
