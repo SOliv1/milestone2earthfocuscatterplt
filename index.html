@@ -37,16 +37,17 @@
     var Population_dim = ndx.dimension(function(d){
             return d.Population;
         });
+        var tradeColors = d3.scale.ordinal()
+            .domain(["Country" "Continent"])
+            .range(["red", "green"]);
+        });
         var min_Population = Population_dim.bottom(1)[0].Population;
         var max_Population = Population_dim.top(1)[0].Population;
-
         var Area_dim = ndx.dimension(function(d)  {
             return [d.Population, d.Area];
         });
-
-        var Area = Area_dim.group();
+        var AreaGroup = AreaDim.group();
         var Area_chart = dc.scatterPlot("#scatter-plot");
-
         Area_chart
             .width(768)
             .height(480)
@@ -55,6 +56,13 @@
             .symbolSize(8)
             .clipPadding(10)
             .yAxisLabel("Area")
+             .title(function (d) {
+                return d.key[2]. + " Area " + d.key[2].Area + " Continent " + d.key[2].Continent;
+            })
+            .colorAccessor(function (d) {
+                return d.key[2].Area;
+            })
+            .colors(tradeColors)
             .dimension(Area_dim)
             .group(Area_group);
 
