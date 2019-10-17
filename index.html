@@ -33,10 +33,10 @@
     queue()
         .defer(d3.json, "countrypopulation.json")
         .await(makeGraphs);
-    function makeGraphs(error, populationData) {
-        var ndx = crossfilter(populationData);
+    function makeGraphs(error, countrypopulationData) {
+        var ndx = crossfilter(countrypopulationData);
 
-        var parseArea = d3.area.format("n").parse;
+        var parseArea = d3.area.format("").parse;
         areaData.forEach(function(d){
             d.area = parseDate(d.area);
         });
