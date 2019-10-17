@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/dc/2.1.8/dc.min.css"/>
     <style>
         div {
-            clear: left;
+            clear: left;\ zzzzzzzzzzzzzzzzzzzzz
         }
     </style>
 
@@ -24,27 +24,39 @@
 
     <h2>DC Scatter Plot</h2>
     <div>
-        <h3>Population verses Area per Country</h3>
+        <h3>Population verses Area</h3>
         <div id="scatter-plot"></div>
     </div>
-    <script
-    >
+    <script>
+
     queue()
         .defer(d3.json, "data/countrypopulation.json")
         .await(makeGraphs);
     function makeGraphs(error, countrypopulationData) {
     var ndx = crossfilter(countrypopulationData);
-    var Population_dim = ndx.dimension(function(d){
+
+    var Population_Dim = ndx.dimension(function(d){
             return d.Population;
         });
         var tradeColors = d3.scale.ordinal()
-            .domain(["Country" "Continent"])
+            .domain(["Country", "Continent"])
             .range(["red", "green"]);
-        });
+
+    var specific_Country = ndx.dimension(dc.pluck("Population"));
+    var Country_Dim = ndx.dimension(function(d) {
+       return [d.Specific_Country, d.Population];
+    });
+    var specificCountryGroup = specificCountryDim.group();
+
         var min_Population = Population_dim.bottom(1)[0].Population;
         var max_Population = Population_dim.top(1)[0].Population;
-        var Area_dim = ndx.dimension(function(d)  {
-            return [d.Population, d.Area];
+
+        var Continent_Dim = ndx.dimension(dc.pluck("Population"));
+        var tot_Continent = ndx.dimension(function(d){
+            return [d.Population, d.Country, d.Continent];
+
+        var Area_dim = ndx.dimension(function(d){
+            return [d.Area, d.Population, d.Country, d.Continent];
         });
         var AreaGroup = AreaDim.group();
         var Area_chart = dc.scatterPlot("#scatter-plot");
@@ -55,9 +67,9 @@
             .brushOn(false)
             .symbolSize(8)
             .clipPadding(10)
-            .yAxisLabel("Area")
-             .title(function (d) {
-                return d.key[2]. + " Area " + d.key[2].Area + " Continent " + d.key[2].Continent;
+            .yAxisLabel("Country")
+            .title(function (d) {
+                return d.key[2] + "Country" + d.key[2].Country + "Population" + d.key[2].Population +"Area" + d.key[2].Area;
             })
             .colorAccessor(function (d) {
                 return d.key[2].Area;
@@ -67,7 +79,7 @@
             .group(Area_group);
 
       dc.renderAll();
-    }
+
     </script>
 </body>
 </html>
