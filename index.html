@@ -34,15 +34,15 @@
         .defer(d3.json, "data/countrypopulation.json")
         .await(makeGraphs);
     function makeGraphs(error, countrypopulationData) {
-
+    var ndx = crossfilter(countrypopulationData);
     var population_dim = ndx.dimension(function(d){
             return d.population;
         });
         var min_population = population_dim.bottom(1)[0].population;
         var max_population = population_dim.top(1)[0].population;
 
-        var _dim = ndx.dimension(function(d){
-            return [d.country, d.population];
+        var _dim = ndx.dimension(function(d)  {
+            return [d.area, d.population];
         });
 
         var area_group = area_dim.group();
