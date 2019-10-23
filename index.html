@@ -32,7 +32,7 @@
     queue()
         .defer(d3.json, "data/countrypopulation.json")
         .await(makeGraphs);
-    function makeGraphs(error, countrypopulationData) {
+    function makeGraphs(error, countrypopulationData)   {
     var ndx = crossfilter(countrypopulationData);
 
     var Population_Dim = ndx.dimension(function(d){
@@ -79,6 +79,9 @@
             .group(Area_group);
 
       dc.renderAll();
+
+    }
+
 
     </script>
 </body>
